@@ -354,14 +354,11 @@ function ST2022_6.dissector(buffer, packet, root)
 		headerLength = headerLength + 4
 	end
 	
-	-- local extensionBytes = extensionLength * 4
 	local extensionStart = headerLength
 	local extensionBytesRemain = extensionSize
 	if extensionSize > 0 then
 		extensionHeader = root:add(ST2022_6, buffer(0, (bufferSize - headerLength)))
 		extensionHeader:append_text(" Header Extension - " .. extensionSize .. " Bytes")
-		--header:add(dashSix.HeaderExtension,buffer(0))
-		
 		
 		while extensionBytesRemain > 0 do
 			local extensionTag = buffer(headerLength,1):uint()
@@ -381,7 +378,6 @@ function ST2022_6.dissector(buffer, packet, root)
 				headerLength = headerLength + 1
 			end
 		end
-		-- extensionBytesRemain = extensionBytesRemain - 2 - extensionLength
 		headerLength = extensionStart + (extensionSize)		
 	end 	
 
